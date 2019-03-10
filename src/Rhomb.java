@@ -16,24 +16,40 @@ public class Rhomb extends Polygon {
 
 	}
 
+	@Override
+	public String toString() {
+		return String.format("Rhomb:(%d;%d)", theCenter.x, theCenter.y);
+	}
+
 	public void draw(Graphics g){
         //считаем и заполняем ArrayList
-        int x = Math.abs(theCenter.x - additionalVertex.x);
+        /*int x = Math.abs(theCenter.x - additionalVertex.x);
         int y = Math.abs(theCenter.y - additionalVertex.y);
         points.add(new Point(theCenter.x, theCenter.y + y));
         points.add(new Point(theCenter.x - x, theCenter.y));
         points.add(new Point(theCenter.x, theCenter.y - y));
-        points.add(new Point(theCenter.x + x, theCenter.y));
+        points.add(new Point(theCenter.x + x, theCenter.y));*/
         //рисуем
         super.draw(g);
 	}
 
-	public ArrayList<Point> location(){
-		return null;
+	public void calcVertices() {
+		int x = Math.abs(theCenter.x - additionalVertex.x);
+		int y = Math.abs(theCenter.y - additionalVertex.y);
+		points.add(new Point(theCenter.x, theCenter.y + y));
+		points.add(new Point(theCenter.x - x, theCenter.y));
+		points.add(new Point(theCenter.x, theCenter.y - y));
+		points.add(new Point(theCenter.x + x, theCenter.y));
 	}
 
-	public void move(){
+	public ArrayList<Point> location(){
+		return points;
+	}
 
+	public void move(int dx, int dy){
+		super.move(dx, dy);
+		/*theCenter.x += dx; theCenter.y += dy;
+		additionalVertex.x += dx; additionalVertex.y += dy;*/
 	}
 
 	public static void draw(App app, Color fill, Color outline) {
@@ -42,20 +58,21 @@ public class Rhomb extends Polygon {
 		canvas.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(rhomb.theCenter == null){
+				if (rhomb.theCenter == null) {
 					rhomb.theCenter = e.getPoint();
-					rhomb.theCenter.y -= 55;
-					rhomb.theCenter.x -= 10;
+					//rhomb.theCenter.y -= 55;
+					//rhomb.theCenter.x -= 10;
 					System.out.println("Первая точка: " + rhomb.theCenter.x + " " + rhomb.theCenter.y);
 				}
-				else{
+				else {
 					rhomb.additionalVertex = e.getPoint();
-					rhomb.additionalVertex.y -= 55;
-					rhomb.additionalVertex.x -= 10;
+					//rhomb.additionalVertex.y -= 55;
+					//rhomb.additionalVertex.x -= 10;
 					System.out.println("Вторая точка: " + rhomb.additionalVertex.x + " " + rhomb.additionalVertex.y);
 					System.out.println("рисуем");
 					rhomb.setColor(outline);
 					rhomb.setFillColor(fill);
+					rhomb.calcVertices();
 					rhomb.draw(canvas.getGraphics());
 					app.add(rhomb);
 					canvas.removeMouseListener(this);

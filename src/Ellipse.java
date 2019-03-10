@@ -18,6 +18,12 @@ public class Ellipse extends Figure2D {
 
 	}
 
+	@Override
+	public String toString() {
+		return String.format("Ellipse:(%d,%d);(%d,%d)", theCenter.x, theCenter.y,
+							additionalVertex.x, additionalVertex.y);
+	}
+
 	public void draw(Graphics g){
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -42,7 +48,8 @@ public class Ellipse extends Figure2D {
 	}
 
 	public void move(int dx, int dy){
-
+		theCenter.x += dx; theCenter.y += dy;
+		additionalVertex.x += dx; additionalVertex.y += dy;
 	}
 
 	public void setAdditionalVertex(){
@@ -58,14 +65,14 @@ public class Ellipse extends Figure2D {
 			public void mouseClicked(MouseEvent e) {
 				if(ellipse.theCenter == null){
 					ellipse.theCenter = e.getPoint();
-					ellipse.theCenter.y -= 55;
-					ellipse.theCenter.x -= 10;
+				//	ellipse.theCenter.y -= 55;
+				//	ellipse.theCenter.x -= 10;
 					System.out.println("Первая точка: " + ellipse.theCenter.x + " " + ellipse.theCenter.y);
 				}
 				else{
 					ellipse.additionalVertex = e.getPoint();
-					ellipse.additionalVertex.y -= 55;
-					ellipse.additionalVertex.x -= 10;
+				//	ellipse.additionalVertex.y -= 55;
+				//	ellipse.additionalVertex.x -= 10;
 					System.out.println("Вторая точка: " + ellipse.additionalVertex.x + " " + ellipse.additionalVertex.y);
 					System.out.println("рисуем");
 					ellipse.setColor(outline);

@@ -12,6 +12,12 @@ public class Line extends Ray {
 
     public Line(){ }
 
+
+    @Override
+    public String toString() {
+        return String.format("Line: (%d, %d):(%d, %d)", theCenter.x, theCenter.y, vertex.x, vertex.y);
+    }
+
     public void draw(Graphics g){
         //super.draw(g);
         Graphics2D g2 = (Graphics2D) g;
@@ -20,9 +26,9 @@ public class Line extends Ray {
         Point tempP1 = new Point();
         Point tempP2 = new Point();
         double newHip1 = theCenter.x / cos;
-        double newHip2 = (984 - theCenter.x) / cos;
+        double newHip2 = (2000 - theCenter.x) / cos;
         tempP1.x = 0;
-        tempP2.x = 984;
+        tempP2.x = 2000;
         if(theCenter.y < vertex.y) {
             tempP1.y = theCenter.y - (int) (newHip1 * (Math.sin(Math.acos(cos))));
             tempP2.y = theCenter.y + (int) (newHip2 * (Math.sin(Math.acos(cos))));

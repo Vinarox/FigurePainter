@@ -16,6 +16,11 @@ public class LineSegment extends Figure1D {
 		vertex = new Point();*/
 	}
 
+	@Override
+	public String toString() {
+		return String.format("Segment: (%d, %d):(%d, %d)", theCenter.x, theCenter.y, vertex.x, vertex.y);
+	}
+
 	public void draw(Graphics g){
         Graphics2D g2 = (Graphics2D) g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -31,7 +36,8 @@ public class LineSegment extends Figure1D {
 	}
 
 	public void move(int dx, int dy){
-
+		theCenter.x += dx; theCenter.y += dy;
+		vertex.x += dx; vertex.y += dy;
 	}
 
 	public static void draw(App app, Color fill, Color outline) {

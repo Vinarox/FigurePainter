@@ -16,6 +16,11 @@ public class Polygon extends Figure2D {
 		points = new ArrayList<>();
 	}
 
+	@Override
+	public String toString() {
+		return String.format("Poly");
+	}
+
 	public void draw(Graphics g){
         Graphics2D g2 = (Graphics2D) g;
 
@@ -45,7 +50,9 @@ public class Polygon extends Figure2D {
 	}
 
 	public void move(int dx, int dy){
-
+		for (Point point : points) {
+			point.x += dx; point.y += dy;
+		}
 	}
 
 	public void setVertex(){
@@ -61,8 +68,8 @@ public class Polygon extends Figure2D {
 				if(e.getButton() == 1){//левая
 					System.out.println("Точка: " + e.getX() + " " + e.getY());
 					Point temp = e.getPoint();
-					temp.y -= 55;
-					temp.x -= 10;
+				//	temp.y -= 55;
+				//	temp.x -= 10;
 					polygon.points.add(temp);
 				}
 				if(e.getButton() == 3){//правая

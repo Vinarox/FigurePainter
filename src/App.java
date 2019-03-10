@@ -4,9 +4,9 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class App {
-    private int Unit = 3;
+    private int Unit = 10;
     private JFrame window;
-    private JPanel canvas;
+    private AppCanvas canvas;
     private JList<Figure> figureJList;
     private DefaultListModel<Figure> figuresListModel;
     private AppMenu appMenu;
@@ -15,7 +15,7 @@ public class App {
     public App() {
         window = new JFrame("Application");
         window.setLayout(new BorderLayout());
-        canvas = new JPanel();
+        canvas = new AppCanvas();
         figuresListModel = new DefaultListModel<>();
         figureJList = new JList<>(figuresListModel);
         appMenu = new AppMenu(this);
@@ -34,14 +34,22 @@ public class App {
             public void keyPressed(KeyEvent keyEvent) {
                 super.keyPressed(keyEvent);
                 //canvas.repaint();
+                //canvas.repaint();
                 //onKeyEvent(keyEvent);
+            }
+        });
+        figureJList.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent keyEvent) {
+                super.keyPressed(keyEvent);
+                onKeyEvent(keyEvent);
             }
         });
     }
 
     public void start() {
         init();
-        figuresListModel.addElement(new Circle());
+      //  figuresListModel.addElement(new Circle());
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setVisible(true);
     }
@@ -51,22 +59,25 @@ public class App {
     }
 
     private void moveAll(int dx, int dy) {
-        canvas.repaint();
+        //canvas.repaint();
         for (Figure figure : figureJList.getSelectedValuesList()) {
             figure.move(dx, dy);
-            figure.draw(getDrawingContext());
+            //figure.draw(getDrawingContext());
         }
+        //canvas.repaint();
+        //canvas.paint(getDrawingContext());
+        canvas.paintComponent(getDrawingContext());
     }
 
     private void onKeyEvent(KeyEvent keyEvent) {
         int dx = 0, dy = 0;
-        int keyCode = keyEvent.getKeyCode();
+        char keyChar = keyEvent.getKeyChar();
 
-        switch (keyCode) {
-            case KeyEvent.VK_LEFT: dx -= Unit; break;
-            case KeyEvent.VK_RIGHT: dx += Unit; break;
-            case KeyEvent.VK_UP: dy -= Unit; break;
-            case KeyEvent.VK_DOWN: dy += Unit; break;
+        switch (keyChar) {
+            case 'a': dx -= Unit; break;
+            case 'd': dx += Unit; break;
+            case 'w': dy -= Unit; break;
+            case 's': dy += Unit; break;
         }
         moveAll(dx, dy);
     }
@@ -123,6 +134,8 @@ public class App {
 
     public void add(Figure figure) {
         figuresListModel.addElement(figure);
+        canvas.add(figure);
+        canvas.paintComponents(getDrawingContext());
     }
 
     public JPanel getCanvas() {

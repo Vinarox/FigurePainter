@@ -17,6 +17,11 @@ public class RegularSymmetric extends Polygon {
 
 	}
 
+	@Override
+	public String toString() {
+		return String.format("Regular:(%d,%d)", theCenter.x, theCenter.y);
+	}
+
 	protected void calculateVertexes(Graphics g){
 		//считаем и заполняем ArrayList
 		double r = Math.sqrt(Math.pow(theCenter.x - additionalVertex.x, 2) + Math.pow(theCenter.y - additionalVertex.y, 2));

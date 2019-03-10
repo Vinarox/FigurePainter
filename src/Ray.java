@@ -14,6 +14,11 @@ public class Ray extends LineSegment {
 
     }
 
+    @Override
+    public String toString() {
+        return String.format("Ray: (%d, %d):(%d, %d)", theCenter.x, theCenter.y, vertex.x, vertex.y);
+    }
+
     public void draw(Graphics g){
         //super.draw(g);
         Graphics2D g2 = (Graphics2D) g;
@@ -22,8 +27,8 @@ public class Ray extends LineSegment {
         Point tempP = new Point();
         double newHip = 0;
         if(tempx > 0){//двигаемся вправо
-            tempP.x = 984;
-            newHip = (984 - theCenter.x) / cos;
+            tempP.x = 2000;
+            newHip = (2000 - theCenter.x) / cos;
         }
         else{//двигаемся влево
             tempP.x = 0;
