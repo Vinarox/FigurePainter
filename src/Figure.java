@@ -27,7 +27,7 @@ public abstract class Figure {
 
 	public abstract ArrayList<Point> location();
 
-	public abstract void move();
+	public abstract void move(int dx, int dy);
 
 	public void setCenter(){
 

@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
@@ -28,8 +30,36 @@ public class LineSegment extends Figure1D {
 		return points;
 	}
 
-	public void move(){
+	public void move(int dx, int dy){
 
+	}
+
+	public static void draw(App app, Color fill, Color outline) {
+		JPanel canvas = app.getCanvas();
+		LineSegment lineSegment = new LineSegment();
+
+		canvas.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(lineSegment.theCenter == null){
+					lineSegment.theCenter = e.getPoint();
+				//	lineSegment.theCenter.y -= 55;
+					//lineSegment.theCenter.x -= 10;
+					System.out.println("Первая точка: " + lineSegment.theCenter.x + " " + lineSegment.theCenter.y);
+				}
+				else{
+					lineSegment.vertex = e.getPoint();
+				//	lineSegment.vertex.y -= 55;
+				//	lineSegment.vertex.x -= 10;
+					System.out.println("Вторая точка: " + lineSegment.vertex.x + " " + lineSegment.vertex.y);
+					System.out.println("рисуем");
+					lineSegment.setColor(outline);
+					lineSegment.draw(canvas.getGraphics());
+					app.add(lineSegment);
+					canvas.removeMouseListener(this);
+				}
+			}
+		});
 	}
 
 }

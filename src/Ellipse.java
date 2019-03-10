@@ -1,4 +1,7 @@
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
@@ -38,12 +41,41 @@ public class Ellipse extends Figure2D {
 		return null;
 	}
 
-	public void move(){
+	public void move(int dx, int dy){
 
 	}
 
 	public void setAdditionalVertex(){
 
+	}
+
+	public static void draw(App app, Color fill, Color outline) {
+		JPanel canvas = app.getCanvas();
+		Ellipse ellipse = new Ellipse();
+
+		canvas.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(ellipse.theCenter == null){
+					ellipse.theCenter = e.getPoint();
+					ellipse.theCenter.y -= 55;
+					ellipse.theCenter.x -= 10;
+					System.out.println("Первая точка: " + ellipse.theCenter.x + " " + ellipse.theCenter.y);
+				}
+				else{
+					ellipse.additionalVertex = e.getPoint();
+					ellipse.additionalVertex.y -= 55;
+					ellipse.additionalVertex.x -= 10;
+					System.out.println("Вторая точка: " + ellipse.additionalVertex.x + " " + ellipse.additionalVertex.y);
+					System.out.println("рисуем");
+					ellipse.setColor(outline);
+					ellipse.setFillColor(fill);
+					ellipse.draw(canvas.getGraphics());
+					app.add(ellipse);
+					canvas.removeMouseListener(this);
+				}
+			}
+		});
 	}
 
 }

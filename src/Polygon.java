@@ -1,4 +1,7 @@
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 /**
@@ -41,12 +44,38 @@ public class Polygon extends Figure2D {
 		return null;
 	}
 
-	public void move(){
+	public void move(int dx, int dy){
 
 	}
 
 	public void setVertex(){
 
+	}
+
+	public static void draw(App app, Color fill, Color outline) {
+		JPanel canvas = app.getCanvas();
+		Polygon polygon = new Polygon();
+		canvas.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(e.getButton() == 1){//левая
+					System.out.println("Точка: " + e.getX() + " " + e.getY());
+					Point temp = e.getPoint();
+					temp.y -= 55;
+					temp.x -= 10;
+					polygon.points.add(temp);
+				}
+				if(e.getButton() == 3){//правая
+					System.out.println("рисуем");
+					polygon.setColor(outline);
+					polygon.setFillColor(fill);
+					polygon.draw(canvas.getGraphics());
+					app.add(polygon);
+					canvas.removeMouseListener(this);
+				}
+			}
+		});
+		//return polygon;
 	}
 
 }

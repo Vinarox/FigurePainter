@@ -1,4 +1,7 @@
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Line2D;
 
 /**
@@ -33,6 +36,33 @@ public class Ray extends LineSegment {
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         Line2D l2 = new Line2D.Double(theCenter, tempP);
         g2.draw(l2);
+    }
+
+    public static void draw(App app, Color fill, Color outline) {
+        Ray ray = new Ray();
+        JPanel canvas = app.getCanvas();
+        canvas.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(ray.theCenter == null){
+                    ray.theCenter = e.getPoint();
+                  //  ray.theCenter.y -= 55;
+                //    ray.theCenter.x -= 10;
+                    System.out.println("Первая точка: " + ray.theCenter.x + " " + ray.theCenter.y);
+                }
+                else {
+                    ray.vertex = e.getPoint();
+                //    ray.vertex.y -= 55;
+                //    ray.vertex.x -= 10;
+                    System.out.println("Вторая точка: " + ray.vertex.x + " " + ray.vertex.y);
+                    System.out.println("рисуем");
+                    ray.setColor(outline);
+                    ray.draw(canvas.getGraphics());
+                    app.add(ray);
+                    canvas.removeMouseListener(this);
+                }
+            }
+        });
     }
 
 }

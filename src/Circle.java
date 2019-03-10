@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 
@@ -31,6 +33,35 @@ public class Circle extends Ellipse {
 
 	public void move(){
 
+	}
+
+	public static void draw(App app, Color fill, Color outline) {
+		JPanel canvas = app.getCanvas();
+	    Circle circle = new Circle();
+
+		canvas.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(circle.theCenter == null){
+					circle.theCenter = e.getPoint();
+					circle.theCenter.y -= 55;
+					circle.theCenter.x -= 10;
+					System.out.println("Первая точка: " + circle.theCenter.x + " " + circle.theCenter.y);
+				}
+				else{
+					circle.additionalVertex = e.getPoint();
+					circle.additionalVertex.y -= 55;
+					circle.additionalVertex.x -= 10;
+					System.out.println("Вторая точка: " + circle.additionalVertex.x + " " + circle.additionalVertex.y);
+					System.out.println("рисуем");
+					circle.setColor(outline);
+					circle.setFillColor(fill);
+					circle.draw(canvas.getGraphics());
+					app.add(circle);
+					canvas.removeMouseListener(this);
+				}
+			}
+		});
 	}
 
 }

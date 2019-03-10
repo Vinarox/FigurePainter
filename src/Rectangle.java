@@ -1,4 +1,7 @@
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 
@@ -36,6 +39,35 @@ public class Rectangle extends Polygon {
 
 	public void move(){
 
+	}
+
+	public static void draw(App app, Color fill, Color outline) {
+        JPanel canvas = app.getCanvas();
+	    Rectangle rectangle = new Rectangle();
+
+        canvas.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(rectangle.theCenter == null){
+                    rectangle.theCenter = e.getPoint();
+                    rectangle.theCenter.y -= 55;
+                    rectangle.theCenter.x -= 10;
+                    System.out.println("Первая точка: " + rectangle.theCenter.x + " " + rectangle.theCenter.y);
+                }
+                else{
+                    rectangle.additionalVertex = e.getPoint();
+                    rectangle.additionalVertex.y -= 55;
+                    rectangle.additionalVertex.x -= 10;
+                    System.out.println("Вторая точка: " + rectangle.additionalVertex.x + " " + rectangle.additionalVertex.y);
+                    System.out.println("рисуем");
+                    rectangle.setColor(outline);
+                    rectangle.setFillColor(fill);
+                    rectangle.draw(canvas.getGraphics());
+                    app.add(rectangle);
+                    canvas.removeMouseListener(this);
+                }
+            }
+        });
 	}
 
 }
